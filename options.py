@@ -43,9 +43,10 @@ def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None)
         current_notes = notes_list[start_idx:end_idx]
 
         # Apply truncation if enabled
+        truncation_length = 20
         if truncated_display:
             current_notes = [
-                (note[:50] + "...") if len(note) > 50 else note for note in current_notes
+                (note[:truncation_length] + "...") if len(note) > truncation_length else note for note in current_notes
             ]
 
         # Fetch folders
