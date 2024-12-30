@@ -1,0 +1,18 @@
+1. Install PyInstaller
+First, ensure you have PyInstaller installed in your environment:
+
+In Python Terminal:
+pip install pyinstaller
+
+
+2. Prepare Your Application
+Ensure your Cheatsheet Builder project is in a clean and organized directory. Place your main script (e.g., main.py) at the root of your project folder, and keep other dependencies properly arranged.
+
+
+3. Basic PyInstaller Command
+Run the following command to package your script into an executable:
+
+In Python Terminal:
+pyinstaller --onefile --name "CheatsheetBuilder" main.py
+
+

@@ -1,0 +1,32 @@
+{
+    "r_cheatsheet": {
+        "notes": [],
+        "submenus": {
+            "r_cheatsheet": {
+                "notes": [],
+                "submenus": {}
+            },
+            "python_cheatsheet": {
+                "notes": [],
+                "submenus": {}
+            },
+            "git_bash_cheatsheet": {
+                "notes": [
+                    "cd # change directory"
+                ],
+                "submenus": {}
+            },
+            "aws_ec2_cheatsheet": {
+                "notes": [],
+                "submenus": {
+                    "connect_to_aws_server": {
+                        "notes": [
+                            "ssh -i 'c:\\Users\\wangn\\.ssh\\wnkkeypair.pem' ubuntu@IP"
+                        ],
+                        "submenus": {}
+                    }
+                }
+            }
+        }
+    }
+}
