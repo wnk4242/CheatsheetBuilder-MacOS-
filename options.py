@@ -8,10 +8,12 @@ from notes_operations import (
     edit_folder,
     delete_folders,
     move_folders_to_folder,
-    arrange_folders_order
+    arrange_folders_order,
+    search_notes,
 )
 
-def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None):
+
+def cheatsheet_menu(title, section, notes, file_name, parent_section=None, breadcrumb=None):
     """
     Display a menu for a specific section with pagination and toggleable options.
     Adds a dynamic breadcrumb navigation trail.
@@ -21,15 +23,19 @@ def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None)
     alphabetical_order = False  # Default to original order
     truncated_display = True  # Default to truncated note display
 
+    # Extract the cheatsheet name from the file name
+    cheatsheet_name = file_name.replace(".json", "")
+
     # Initialize breadcrumb if not passed
     if breadcrumb is None:
-        breadcrumb = [title.replace('_', ' ').title()]
+        breadcrumb = ["Main Menu"]
 
     while True:
         clear_screen()
 
-        # Display breadcrumb navigation
-        print(f"\n{' > '.join(breadcrumb)}\n")
+        # Display the cheatsheet name and breadcrumb navigation
+        print(f"\nCheatsheet: {cheatsheet_name}\n")
+        print(f"{' > '.join(breadcrumb)}\n")
 
         # Fetch notes and apply ordering if needed
         notes_list = section.get("notes", [])
@@ -43,7 +49,7 @@ def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None)
         current_notes = notes_list[start_idx:end_idx]
 
         # Apply truncation if enabled
-        truncation_length = 20
+        truncation_length = 20  # Set globally for easier adjustments
         if truncated_display:
             current_notes = [
                 (note[:truncation_length] + "...") if len(note) > truncation_length else note for note in current_notes
@@ -76,6 +82,7 @@ def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None)
             "m. Arrange Folders Order",
             f"q. Toggle Note Order ({'Alphabetical' if alphabetical_order else 'Original'})",
             f"w. Toggle Note Display ({'Truncated' if truncated_display else 'Full'})",
+            "r. Search Notes",
             "e. Go Back",
         ]
 
@@ -96,23 +103,23 @@ def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None)
         choice = input("\nEnter your choice: ").strip()
 
         if choice.lower() == 'a':
-            add_note(section, notes)
+            add_note(section, notes, file_name)
         elif choice.lower() == 's':
-            edit_note(section, notes)
+            edit_note(section, notes, file_name)
         elif choice.lower() == 'd':
-            delete_notes(section, notes)
+            delete_notes(section, notes, file_name)
         elif choice.lower() == 'j':
-            add_folder(section.setdefault("submenus", {}), notes)
+            add_folder(section.setdefault("submenus", {}), notes, file_name)
         elif choice.lower() == 'k':
-            edit_folder(section.get("submenus", {}), notes)
+            edit_folder(section.get("submenus", {}), notes, file_name)
         elif choice.lower() == 'l':
-            delete_folders(section.get("submenus", {}), notes)
+            delete_folders(section.get("submenus", {}), notes, file_name)
         elif choice.lower() == 'f':
-            move_notes_to_folder(section, parent_section, notes)
+            move_notes_to_folder(section, parent_section, notes, file_name)
         elif choice.lower() == 'n':
-            move_folders_to_folder(section.get("submenus", {}), parent_section, notes)
+            move_folders_to_folder(section.get("submenus", {}), parent_section, notes, file_name)
         elif choice.lower() == 'm':
-            arrange_folders_order(section.get("submenus", {}), notes)
+            arrange_folders_order(section.get("submenus", {}), notes, file_name)
         elif choice.lower() == 'q':
             alphabetical_order = not alphabetical_order
             print(f"Order toggled to {'Alphabetical' if alphabetical_order else 'Original'}.")
@@ -121,6 +128,8 @@ def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None)
             truncated_display = not truncated_display
             print(f"Note display toggled to {'Truncated' if truncated_display else 'Full'}.")
             input("Press Enter to continue...")
+        elif choice.lower() == 'r':  # Search Notes
+            search_notes(notes)
         elif choice == ";":
             if page > 0:
                 page -= 1
@@ -137,6 +146,7 @@ def cheatsheet_menu(title, section, notes, parent_section=None, breadcrumb=None)
                     folder_key.replace('_', ' ').title(),
                     folders[folder_key],
                     notes,
+                    file_name,
                     parent_section=section,
                     breadcrumb=breadcrumb + [folder_key.replace('_', ' ').title()]
                 )

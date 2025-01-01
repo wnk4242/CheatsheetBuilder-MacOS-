@@ -1,6 +1,6 @@
 from utils import save_notes
 
-def add_note(section, notes):
+def add_note(section, notes, file_name):
     """Add a new note to the section."""
     note = input("Enter the new note (or press Enter to cancel): ").strip()
     if not note:
@@ -8,14 +8,14 @@ def add_note(section, notes):
         input("Press Enter to continue...")
         return
     section.setdefault("notes", []).append(note)
-    save_notes(notes)
+    save_notes(notes, file_name)
     print("Note added successfully.")
     input("Press Enter to continue...")
 
 
 
 
-def edit_note(section, notes):
+def edit_note(section, notes, file_name):
     """Edit an existing note in the section."""
     notes_list = section.get("notes", [])
     if not notes_list:
@@ -44,7 +44,7 @@ def edit_note(section, notes):
                 input("Press Enter to continue...")
                 return
             notes_list[idx] = new_note
-            save_notes(notes)
+            save_notes(notes, file_name)
             print("Note updated successfully!")
         else:
             print("Invalid note number. Returning to the menu.")
@@ -54,7 +54,7 @@ def edit_note(section, notes):
     input("Press Enter to continue...")
 
 
-def delete_notes(section, notes):
+def delete_notes(section, notes, file_name):
     """Delete multiple notes from the section."""
     notes_list = section.get("notes", [])
     if not notes_list:
@@ -82,7 +82,7 @@ def delete_notes(section, notes):
         confirm = input("Are you sure you want to delete all notes? (y/n): ").strip().lower()
         if confirm == "y":
             notes_list.clear()
-            save_notes(notes)
+            save_notes(notes, file_name)
             print("All notes deleted successfully.")
         else:
             print("Delete all notes canceled.")
@@ -106,13 +106,13 @@ def delete_notes(section, notes):
         for idx in sorted(set(indices), reverse=True):  # Remove duplicates and sort descending
             notes_list.pop(idx)
 
-        save_notes(notes)
+        save_notes(notes, file_name)
         print("Selected notes deleted successfully.")
     except ValueError:
         print("Invalid input. No notes deleted.")
     input("Press Enter to continue...")
 
-def move_notes_to_folder(current_section, parent_section, notes):
+def move_notes_to_folder(current_section, parent_section, notes, file_name):
     """Move multiple notes from the current section into a specified folder."""
     notes_list = current_section.get("notes", [])
     if not notes_list:
@@ -188,11 +188,11 @@ def move_notes_to_folder(current_section, parent_section, notes):
     else:
         print("Invalid input. Returning to menu.")
 
-    save_notes(notes)
+    save_notes(notes, file_name)
     input("Press Enter to continue...")
 
 
-def add_folder(folders, notes):
+def add_folder(folders, notes, file_name):
     """Add a new folder."""
     folder_name = input("Enter the name of the new folder (or press Enter to cancel): ").strip().replace(' ', '_').lower()
     if not folder_name:
@@ -203,11 +203,11 @@ def add_folder(folders, notes):
         print("Folder already exists. Returning to the menu.")
     else:
         folders[folder_name] = {"notes": [], "submenus": {}}
-        save_notes(notes)
+        save_notes(notes, file_name)
         print(f"Folder '{folder_name.replace('_', ' ').title()}' added successfully!")
     input("Press Enter to continue...")
 
-def edit_folder(folders, notes):
+def edit_folder(folders, notes, file_name):
     """Edit the name of an existing folder."""
     if not folders:
         print("No folders to edit. Returning to the menu.")
@@ -240,7 +240,7 @@ def edit_folder(folders, notes):
                 print("A folder with this name already exists. No changes made.")
             else:
                 folders[new_name] = folders.pop(current_name)
-                save_notes(notes)
+                save_notes(notes, file_name)
                 print("Folder name updated successfully!")
         else:
             print("Invalid folder number. Returning to the menu.")
@@ -249,7 +249,7 @@ def edit_folder(folders, notes):
     input("Press Enter to continue...")
 
 
-def delete_folders(folders, notes):
+def delete_folders(folders, notes, file_name):
     """Delete multiple folders from the current section."""
     if not folders:
         print("No folders to delete. Returning to the menu.")
@@ -286,14 +286,14 @@ def delete_folders(folders, notes):
             else:
                 print(f"Invalid folder number: {idx + 1}. Skipping.")
 
-        save_notes(notes)
+        save_notes(notes, file_name)
         print("Folder deletion process completed.")
     except ValueError:
         print("Invalid input. No folders deleted.")
     input("Press Enter to continue...")
 
 
-def move_folders_to_folder(current_folders, parent_section, notes):
+def move_folders_to_folder(current_folders, parent_section, notes, file_name):
     """
     Move one or more folders to another folder or to the parent folder.
     """
@@ -346,7 +346,7 @@ def move_folders_to_folder(current_folders, parent_section, notes):
             # Move to parent folder
             for folder_key in selected_folders:
                 parent_section.setdefault("submenus", {})[folder_key] = current_folders.pop(folder_key)
-            save_notes(notes)
+            save_notes(notes, file_name)
             print("Selected folders moved to the parent folder successfully.")
         elif 1 <= target_idx <= len(folder_keys) and folder_keys[target_idx - 1] not in selected_folders:
             # Move to another folder
@@ -354,7 +354,7 @@ def move_folders_to_folder(current_folders, parent_section, notes):
             target_folder = current_folders[target_folder_key]
             for folder_key in selected_folders:
                 target_folder.setdefault("submenus", {})[folder_key] = current_folders.pop(folder_key)
-            save_notes(notes)
+            save_notes(notes, file_name)
             print(f"Selected folders moved to '{target_folder_key.replace('_', ' ').title()}' successfully.")
         else:
             print("Invalid target selection. Returning to menu.")
@@ -365,7 +365,7 @@ def move_folders_to_folder(current_folders, parent_section, notes):
 
 
 
-def arrange_folders_order(folders, notes):
+def arrange_folders_order(folders, notes, file_name):
     """Arrange the order of folders."""
     if not folders:
         print("No folders available to arrange.")
@@ -402,10 +402,58 @@ def arrange_folders_order(folders, notes):
         folders.clear()
         folders.update(reordered_folders)
 
-        save_notes(notes)
+        save_notes(notes, file_name)
         print("Folders reordered successfully.")
     except ValueError as e:
         print(f"Error: {e}. No changes made.")
     input("Press Enter to continue...")
 
 
+def search_notes(notes):
+    """Search for a keyword in all notes."""
+    keyword = input("Enter a keyword to search (or press Enter to cancel): ").strip()
+
+    if not keyword:
+        print("No keyword entered. Returning to the main menu.")
+        input("Press Enter to continue...")
+        return
+
+    print(f"Searching for '{keyword}'...\n")
+
+    # Recursive function to search notes within folders
+    def search_section(section, path=""):
+        found = False
+        for note in section.get("notes", []):
+            if keyword.lower() in note.lower():
+                print(f"Found in {path or '[Main Folder]'}: {note}")
+                found = True
+        for folder, content in section.get("submenus", {}).items():
+            if search_section(content, path + " > " + folder.replace("_", " ").title()):
+                found = True
+        return found
+
+    # Start the search
+    if not search_section(notes["r_cheatsheet"]):
+        print("No matches found.")
+
+    input("\nPress Enter to return to the main menu.")
+
+
+def export_notes(notes, cheatsheet_file):
+    """Export all notes to a text file."""
+    # Derive the export file name from the cheatsheet file name
+    export_file = cheatsheet_file.replace(".json", ".txt")
+
+    try:
+        with open(export_file, "w", encoding="utf-8") as file:
+            def export_section(file, section, prefix=""):
+                for note in section.get("notes", []):
+                    file.write(f"{prefix}- {note}\n")
+                for folder, content in section.get("submenus", {}).items():
+                    file.write(f"{prefix}{folder.replace('_', ' ').title()}:\n")
+                    export_section(file, content, prefix + "  ")
+            export_section(file, notes["r_cheatsheet"])
+        print(f"Cheatsheet exported successfully to {export_file}.")
+    except Exception as e:
+        print(f"Error exporting notes: {e}")
+    input("Press Enter to continue...")

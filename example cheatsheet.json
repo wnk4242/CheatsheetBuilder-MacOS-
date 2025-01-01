@@ -1,0 +1,35 @@
+{
+    "r_cheatsheet": {
+        "submenus": {
+            "first_folder": {
+                "notes": [],
+                "submenus": {
+                    "first_subfolder": {
+                        "notes": [],
+                        "submenus": {
+                            "first_subsubfolder": {
+                                "notes": [
+                                    "Ah, you found me using Search Notes."
+                                ],
+                                "submenus": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "second_folder": {
+                "notes": [],
+                "submenus": {}
+            }
+        },
+        "notes": [
+            "First note",
+            "Second note",
+            "Third note",
+            "Fourth note",
+            "Fifth note",
+            "Sixth note",
+            "This is a very lonnnnnnnnnnnnnnnnnnnnnnnnnnnnn note."
+        ]
+    }
+}

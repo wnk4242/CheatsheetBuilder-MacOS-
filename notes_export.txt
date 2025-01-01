@@ -1,6 +1,0 @@
-Section: r_cheatsheet
-Notes:
-- b
-- d
-- f
-
