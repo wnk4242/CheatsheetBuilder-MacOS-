@@ -1,3 +1,13 @@
 {
-    "r_cheatsheet": {}
+    "r_cheatsheet": {
+        "notes": [
+            "new new note"
+        ],
+        "submenus": {
+            "new_folder": {
+                "notes": [],
+                "submenus": {}
+            }
+        }
+    }
 }

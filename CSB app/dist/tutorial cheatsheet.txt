@@ -1,0 +1,23 @@
+- Press a to add notes.
+- New notes are added to the last page.
+- Press ' to navigate to the next page.
+- Press j to create folders.
+- You can create folders inside folders.
+- Long notes are truncated by default.
+- This is a looooooooooooooooooonnnnnnnnnnnnnnnnnong note.
+- Press w to view notes in full length.
+- Press q to sort notes alphabetically.
+- Press m to arrange the order of the folders.
+- Press r to search notes in this cheatsheet.
+- Press f to move me to the First Folder.
+- Press n to move the Second Folder into the First Folder.
+- Press e to go to the main menu and create new cheatsheet!
+First Folder:
+  - Press f to move a note out of a folder.
+  - Press n to move the Second Folder out.
+Second Folder:
+  - Press d to delete me.
+  Open This Folder:
+    - Great job! You found me using the search function!
+    Press L To Delete This Folder:
+    Press N To Move This Folder Out:
