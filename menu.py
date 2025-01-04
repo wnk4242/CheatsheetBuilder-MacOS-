@@ -31,7 +31,7 @@ def main_menu():
                 selected_file += ".json"
 
             # Create a blank cheatsheet
-            notes = {"r_cheatsheet": {}}
+            notes = {"r_cheatsheet": {"submenus": {}, "notes": []}}
             save_notes(notes, selected_file)
             print(f"New cheatsheet '{selected_file}' created.")
             input("Press Enter to continue...")
