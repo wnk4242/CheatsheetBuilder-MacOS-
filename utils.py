@@ -46,8 +46,7 @@ def choose_notes_file():
     if choice.isdigit() and 1 <= int(choice) <= len(files):
         return files[int(choice) - 1]
     else:
-        print("Invalid choice. Returning to the main menu.")
-        input("Press Enter to continue...")
+        print("Invalid choice. Please select a valid number to open a cheatsheet.")
         return None
 
 def load_notes(file_name=None):
