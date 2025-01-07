@@ -67,7 +67,6 @@ def delete_notes(section, notes, file_name):
     for i, note in enumerate(notes_list, 1):
         print(f"{i}. {note}")
 
-    #print("\nType 'all' to delete all notes.")
     # Prompt user for note numbers to delete
     selected = input(
         "Enter the note numbers to delete (comma-separated, 'all' to delete all notes, or press Enter to cancel): "
@@ -102,15 +101,21 @@ def delete_notes(section, notes, file_name):
             input("Press Enter to continue...")
             return
 
-        # Delete valid notes
+        # Confirm deletion for each note
         for idx in sorted(set(indices), reverse=True):  # Remove duplicates and sort descending
-            notes_list.pop(idx)
+            note = notes_list[idx]
+            confirm = input(f"Are you sure you want to delete the note: \"{note}\"? (y/n): ").strip().lower()
+            if confirm == "y":
+                notes_list.pop(idx)
+                print(f"Note \"{note}\" deleted.")
+            else:
+                print(f"Deletion of note \"{note}\" canceled.")
 
         save_notes(notes, file_name)
-        print("Selected notes deleted successfully.")
     except ValueError:
         print("Invalid input. No notes deleted.")
     input("Press Enter to continue...")
+
 
 def move_notes_to_folder(current_section, parent_section, notes, file_name):
     """Move multiple notes from the current section into a specified folder."""

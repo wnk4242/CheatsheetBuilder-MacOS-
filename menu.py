@@ -26,9 +26,12 @@ def main_menu():
         choice = input("\nEnter your choice: ").strip()
 
         if choice == "1":  # New Cheatsheet
-            selected_file = input("Enter a name for the new cheatsheet (without .json): ").strip() + ".json"
-            if not selected_file.endswith(".json"):
-                selected_file += ".json"
+            selected_file = input("Enter a name for the new cheatsheet (or press Enter to cancel): ").strip()
+            if not selected_file:  # Check if input is empty
+                print("Action canceled. Returning to the main menu.")
+                input("Press Enter to continue...")
+                continue
+            selected_file += ".json" if not selected_file.endswith(".json") else ""
 
             # Create a blank cheatsheet
             notes = {"r_cheatsheet": {"submenus": {}, "notes": []}}
@@ -36,6 +39,7 @@ def main_menu():
             print(f"New cheatsheet '{selected_file}' created.")
             input("Press Enter to continue...")
             cheatsheet_menu("New Cheatsheet", notes["r_cheatsheet"], notes, selected_file)
+
 
         elif choice == "2":  # Load Cheatsheet
             selected_file = choose_notes_file()
