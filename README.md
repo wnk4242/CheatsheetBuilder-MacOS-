@@ -5,7 +5,15 @@
 The **Cheatsheet Builder** is an intuitive and dynamic tool designed for users to create, organize, and manage personalized cheatsheets. Whether you're a developer, student, or professional, this program provides a flexible system to structure your notes and ideas into folders, subfolders, and sections. With user-friendly features and robust navigation options, it aims to streamline the process of note-taking and reference creation.
 
 ---
+**Main menu:**
 
+![main menu](https://github.com/user-attachments/assets/25be8331-cea8-46af-a5fb-365a4cd643db)
+
+**Inside a cheatsheet:**
+
+![cheatsheet page](https://github.com/user-attachments/assets/3651a822-dea6-4ccd-867c-d4c71537e9c1)
+
+---
 ## Features
 
 ### 📝 Notes Management
